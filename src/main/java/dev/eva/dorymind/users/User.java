@@ -156,6 +156,10 @@ public class User {
         }
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
     public void removeRole(Role role) {
         roles.remove(role);
         role.getUsers().remove(this);
