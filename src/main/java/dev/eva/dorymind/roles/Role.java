@@ -1,27 +1,28 @@
 package dev.eva.dorymind.roles;
 
-import java.util.Set;
-
+import java.util.ArrayList;
+import java.util.List;
 import dev.eva.dorymind.users.User;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "roles")
 public class Role {
     
+    
     public Role() {
     }
-
-    public Role(Long id, String name, Set<User> users) {
+   
+    public Role(Long id, String roleName, List<User> users) {
         this.id = id;
-        this.name = name;
+        this.roleName = roleName;
         this.users = users;
     }
 
@@ -30,10 +31,11 @@ public class Role {
     private Long id;
 
     @Column(name = "name", nullable = false, unique = true)
-    private String name;
+    private String roleName;
 
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
-    private Set<User> users;
+    // un rol puede tener muchos users
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    private List<User> users = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -43,20 +45,19 @@ public class Role {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
-    public Set<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
-    }
-    
+    }    
 }

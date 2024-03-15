@@ -5,19 +5,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import dev.eva.dorymind.groups.Group;
 import dev.eva.dorymind.roles.Role;
 import dev.eva.dorymind.tasks.Task;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -29,7 +25,7 @@ public class User {
     public User() {
     }
     
-    public User(Long id, String username, String password, String email, Group group) {
+    public User(Long id, String username, String password, String email, String group) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -53,19 +49,24 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "group_id")
-    private Group group;
+    private String group;
 
     //último añadido:@OneToMany
     @OneToMany(mappedBy = "assignedUser", cascade = CascadeType.ALL)
     private List<Task> tasks = new ArrayList<>();
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
+/*     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "user_roles",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
+    ) */
+
+    // ** un Role puede tener muchos User, pero cada User tiene un único Role
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
     
     private Set<Role> roles = new HashSet<>();
 
@@ -97,45 +98,13 @@ public class User {
         this.email = email;
     }
 
-    public Group getGroup() {
+    public String getGroup() {
         return group;
     }
 
-    public void setGroup(Group group) {
+    public void setGroup(String group) {
     this.group = group;  
     }
-
-    // public void setGroup(Group group) {
-    //     this.group = group;
-    //     if (group != null && !group.getUsers().contains(this)) {
-    //         group.getUsers().add(this);
-    //     }
-    // }
-
-    // public void addUserToGroup(User userToAdd) {
-    //     if (group != null && userToAdd != null) {
-    //         if (!group.getUsers().contains(userToAdd)) {
-    //             group.addUser(userToAdd);
-    //             userToAdd.setGroup(group);
-    //         }
-    //     }
-    // }
-
-
-    // creo que no es necesior ** probar ***
-/*     public void addUserToGroup(Group group) {
-        if (group != null && !group.getUsers().contains(this)) {
-            group.getUsers().add(this);
-            this.group = group;
-        }
-    }
-
-    public void removeUserFromGroup() {
-        if (group != null) {
-            group.getUsers().remove(this);
-            this.group = null;
-        }
-    } */
 
     public boolean isAdmin() {
         return hasRole("ROLE_ADMIN");
@@ -146,7 +115,7 @@ public class User {
     }
     
     private boolean hasRole(String roleName) {
-        return roles.stream().anyMatch(role -> role.getName().equals(roleName));
+        return roles.stream().anyMatch(role -> role.getRoleName().equals(roleName));
     }
     
     public void assignRole(Role role) {
@@ -156,9 +125,18 @@ public class User {
         }
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
+
+    public Role getRole() {
+        return role;
+    }
+
+
+/*     public Set<Role> getRoles() {
+        return roles;
+    } */
 
     public void removeRole(Role role) {
         roles.remove(role);

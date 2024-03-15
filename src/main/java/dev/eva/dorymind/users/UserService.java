@@ -3,7 +3,6 @@ package dev.eva.dorymind.users;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import dev.eva.dorymind.roles.Role;
@@ -54,17 +53,13 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-        public User addRoleToEntity(User user, Role role) {
-        user.getRoles().add(role);
-        return userRepository.save(user);
-    }
 
 
     // Métodos específicos para User
 
-    //agrega un rol a la lista de roles del usuario y guarda el usuario actualizado en la base de datos.
-    public User addRoleToUser(User user, Role role) {
-        user.getRoles().add(role);
+    //establece el rol de un usuario:
+    public User setRoleToUser(User user, Role role) {
+        user.setRole(role);
         return userRepository.save(user);
     }
   

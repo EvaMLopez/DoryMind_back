@@ -74,7 +74,7 @@ public class Group {
 
     public void addUser (User user) {
         users.add(user);
-        user.setGroup(this);
+        user.setGroup(this.groupName);
     }
 
     public void removeUser(User user) {
