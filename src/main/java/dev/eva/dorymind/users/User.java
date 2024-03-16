@@ -1,10 +1,8 @@
 package dev.eva.dorymind.users;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
+import dev.eva.dorymind.groups.Group;
 import dev.eva.dorymind.roles.Role;
 import dev.eva.dorymind.tasks.Task;
 import jakarta.persistence.CascadeType;
@@ -22,18 +20,6 @@ import jakarta.persistence.Table;
 @Table(name ="users")
 public class User {
     
-    public User() {
-    }
-    
-    public User(Long id, String username, String password, String email, String group) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.group = group;
-        this.roles = new HashSet<>();
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -49,26 +35,26 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "group_id")
-    private String group;
+    private Group group;
 
-    //último añadido:@OneToMany
     @OneToMany(mappedBy = "assignedUser", cascade = CascadeType.ALL)
     private List<Task> tasks = new ArrayList<>();
-
-
-/*     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "user_roles",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "role_id")
-    ) */
 
     // ** un Role puede tener muchos User, pero cada User tiene un único Role
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
+        
+    public User() {
+    }
     
-    private Set<Role> roles = new HashSet<>();
+    public User(Long id, String username, String password, String email, Group group) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.group = group;    
+    }
 
     public Long getId() {
         return id;
@@ -98,11 +84,11 @@ public class User {
         this.email = email;
     }
 
-    public String getGroup() {
+    public Group getGroup() {
         return group;
     }
 
-    public void setGroup(String group) {
+    public void setGroup(Group group) {
     this.group = group;  
     }
 
@@ -114,15 +100,16 @@ public class User {
         return hasRole("ROLE_USER");
     }
     
-    private boolean hasRole(String roleName) {
+/*     private boolean hasRole(String roleName) {
         return roles.stream().anyMatch(role -> role.getRoleName().equals(roleName));
+    } */
+
+    private boolean hasRole(String roleName) {
+        return this.role.getRoleName().equals(roleName);
     }
     
     public void assignRole(Role role) {
-        if (!roles.contains(role)) {
-            roles.add(role);
-            role.getUsers().add(this);
-        }
+        this.role = role;
     }
 
     public void setRole(Role role) {
@@ -131,16 +118,6 @@ public class User {
 
     public Role getRole() {
         return role;
-    }
-
-
-/*     public Set<Role> getRoles() {
-        return roles;
-    } */
-
-    public void removeRole(Role role) {
-        roles.remove(role);
-        role.getUsers().remove(this);
     }
 
     public void editProfile(String newUsername, String newPassword, String newEmail) {

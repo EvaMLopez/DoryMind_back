@@ -40,7 +40,7 @@ public class GroupService {
     // Métodos específicos para Group
     public void addUserToGroup(User user, Group group) {
         group.getUsers().add(user);
-        user.setGroup(group.getGroupName());
+        user.setGroup(group);
         groupRepository.save(group);
     }
 

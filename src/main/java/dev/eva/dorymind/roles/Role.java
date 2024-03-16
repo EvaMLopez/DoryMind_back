@@ -14,17 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "roles")
-public class Role {
-    
-    
-    public Role() {
-    }
-   
-    public Role(Long id, String roleName, List<User> users) {
-        this.id = id;
-        this.roleName = roleName;
-        this.users = users;
-    }
+public class Role {    
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -36,6 +26,15 @@ public class Role {
     // un rol puede tener muchos users
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<>();
+        
+    public Role() {
+    }
+   
+    public Role(Long id, String roleName, List<User> users) {
+        this.id = id;
+        this.roleName = roleName;
+        this.users = users;
+    }
 
     public Long getId() {
         return id;

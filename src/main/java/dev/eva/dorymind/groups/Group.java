@@ -15,18 +15,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "groups")
+@Table(name = "user_groups")
 public class Group {
-
-    public Group(Long id, String groupName, List<User> users, List<Task> tasks) {
-        this.id = id;
-        this.groupName = groupName;
-        this.users = users != null ? users : new ArrayList<>();
-        this.tasks = tasks != null ? tasks : new ArrayList<>();
-    }
-
-    public Group() {
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,11 +28,18 @@ public class Group {
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<>();
 
-/*     @OneToMany(mappedBy = "assignedUser", cascade = CascadeType.ALL)
-    private List<Task> tasks = new ArrayList<>(); */
-
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Task> tasks = new ArrayList<>();
+    
+    public Group(Long id, String groupName, List<User> users, List<Task> tasks) {
+        this.id = id;
+        this.groupName = groupName;
+        this.users = users != null ? users : new ArrayList<>();
+        this.tasks = tasks != null ? tasks : new ArrayList<>();
+    }
+
+    public Group() {
+    }
 
     public Long getId() {
         return id;
@@ -74,7 +71,7 @@ public class Group {
 
     public void addUser (User user) {
         users.add(user);
-        user.setGroup(this.groupName);
+        user.setGroup(this);
     }
 
     public void removeUser(User user) {

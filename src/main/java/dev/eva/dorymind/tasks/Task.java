@@ -14,22 +14,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "table")
+@Table(name = "tasks")
 public class Task {
-
-    public Task() {
-    }
-    
-    public Task(Long id, String title, String description, LocalDate deadline, Group group, User assignedUser, boolean urgent, boolean completed) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.deadline = deadline;
-        this.group = group;
-        this.assignedUser = assignedUser;
-        this.urgent = urgent;
-        this.completed = completed;
-    }
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
@@ -57,6 +43,20 @@ public class Task {
 
     @Column(name = "is_completed")
     private boolean completed;
+    
+    public Task() {
+    }
+    
+    public Task(Long id, String title, String description, LocalDate deadline, Group group, User assignedUser, boolean urgent, boolean completed) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.deadline = deadline;
+        this.group = group;
+        this.assignedUser = assignedUser;
+        this.urgent = urgent;
+        this.completed = completed;
+    }
 
     public Long getId() {
         return id;
