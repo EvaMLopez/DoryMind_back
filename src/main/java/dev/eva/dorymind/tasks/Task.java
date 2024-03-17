@@ -58,6 +58,10 @@ public class Task {
         this.completed = completed;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
@@ -117,5 +121,6 @@ public class Task {
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
+
     
 }

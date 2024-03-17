@@ -21,6 +21,10 @@ public class GroupService {
         return groupRepository.findById(id).orElse(null);
     }
 
+    public Group findByName(String groupName) {
+        return groupRepository.findByGroupName(groupName);
+    }
+
     public Group save(Group group) {
         return groupRepository.save(group);
     }

@@ -21,7 +21,7 @@ public class Role {
     private Long id;
 
     @Column(name = "name", nullable = false, unique = true)
-    private String roleName;
+    private String name;
 
     // un rol puede tener muchos users
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
@@ -30,9 +30,9 @@ public class Role {
     public Role() {
     }
    
-    public Role(Long id, String roleName, List<User> users) {
+    public Role(Long id, String name, List<User> users) {
         this.id = id;
-        this.roleName = roleName;
+        this.name = name;
         this.users = users;
     }
 
@@ -44,12 +44,12 @@ public class Role {
         this.id = id;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getname() {
+        return name;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setname(String name) {
+        this.name = name;
     }
 
     public List<User> getUsers() {

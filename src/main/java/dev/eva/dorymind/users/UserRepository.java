@@ -1,7 +1,26 @@
 package dev.eva.dorymind.users;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
 
-public interface UserRepository extends JpaRepository <User, Long>  {
-    //public Optional<User> findByUsername(String username);    
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+/* public interface UserRepository extends JpaRepository <User, Long>  {
+
+     Long findGroupIdByUserId(Long userId);
+    public Optional<User> findByUsername(String username);    
+
+    @Query("SELECT u.group.id FROM User u WHERE u.id = :userId")
+    Long findGroupIdByUserId(@Param("userId") Long userId);
+
+}
+ */
+
+
+ public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByUsername(String username);
+
+    @Query("SELECT u.group.id FROM User u WHERE u.id = :userId")
+    Long findGroupIdByUserId(@Param("userId") Long userId);
 }

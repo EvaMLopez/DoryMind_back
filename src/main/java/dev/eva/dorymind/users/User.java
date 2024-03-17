@@ -60,6 +60,11 @@ public class User {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+   
+
     public String getUsername() {
         return username;
     }
@@ -100,12 +105,8 @@ public class User {
         return hasRole("ROLE_USER");
     }
     
-/*     private boolean hasRole(String roleName) {
-        return roles.stream().anyMatch(role -> role.getRoleName().equals(roleName));
-    } */
-
-    private boolean hasRole(String roleName) {
-        return this.role.getRoleName().equals(roleName);
+    private boolean hasRole(String name) {
+        return this.role.getname().equals(name);
     }
     
     public void assignRole(Role role) {
