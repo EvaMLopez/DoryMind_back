@@ -2,6 +2,8 @@ package dev.eva.dorymind.tasks;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import dev.eva.dorymind.groups.Group;
 import dev.eva.dorymind.users.User;
 import jakarta.persistence.Column;
@@ -32,10 +34,12 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "group_id")
+    @JsonManagedReference // Añade esta anotación aquí
     private Group group;
 
     @ManyToOne
     @JoinColumn(name = "assigned_user_id")
+    @JsonManagedReference // Añade esta anotación aquí    
     private User assignedUser;
 
     @Column(name = "is_urgent")
@@ -120,7 +124,5 @@ public class Task {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
-    }
-
-    
+    }    
 }

@@ -12,19 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import dev.eva.dorymind.roles.Role;
-import dev.eva.dorymind.roles.RoleRepository;
-
 
 @RequestMapping(path = "${api-endpoint}/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private RoleRepository roleRepository;
 
     @GetMapping
     public List<User> getAllUsers() {
@@ -48,17 +41,6 @@ public class UserController {
         if (user != null) {
             userService.delete(user);
         }
-    }
-
-    @PostMapping("/set-role")
-    public User setRoleToUser(@RequestBody User user, @RequestParam String roleName) {
-        Role role = roleRepository.findByName(roleName);
-        return userService.setRoleToUser(user, role);
-    }
-
-    @PostMapping("/register")
-    public User registerUser(@RequestBody User user, @RequestParam String groupName) {
-        return userService.registerUser(user, groupName);
     }
 
     @PostMapping("/add-member")

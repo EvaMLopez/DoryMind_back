@@ -41,13 +41,9 @@ public class GroupService {
         groupRepository.deleteById(id);
     }
 
-    // Métodos específicos para Group
     public void addUserToGroup(User user, Group group) {
         group.getUsers().add(user);
         user.setGroup(group);
         groupRepository.save(group);
-    }
-
-    // ... otros métodos específicos para Group
-    
+    }    
 }

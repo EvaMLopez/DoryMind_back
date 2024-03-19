@@ -34,7 +34,4 @@ public class RoleService {
     public void deleteById(Long id) {
         roleRepository.deleteById(id);
     }
-
-    // Métodos específicos para Role
-    // ... implementar según sea necesario
 }

@@ -17,13 +17,17 @@ public class SecurityUser implements UserDetails{
         this.user = user;
     }
 
+    public Long getId() {
+        return user.getId();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
     
         Role role = user.getRole(); // Obtiene el único Role del usuario
-        System.out.println("User role : " + role.getname());
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getname());
+        System.out.println("User role : " + role.getName());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
         authorities.add(authority);
     
         return authorities;

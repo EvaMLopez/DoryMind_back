@@ -41,16 +41,15 @@ public class SecurityConfiguration {
                 .logout(out -> out
                         .logoutUrl(endpoint + "/logout")
                         .deleteCookies("JSESSIONID"))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, endpoint + "/login").hasAnyRole("ADMIN","USER")       
-                        .requestMatchers(HttpMethod.POST, endpoint + "/login").hasAnyRole("ADMIN","USER")                   
-                        .requestMatchers(HttpMethod.POST, endpoint + "/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, endpoint + "/add-member").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, endpoint + "/tasks/**").hasAnyRole("ADMIN","USER")  
-                        .requestMatchers(HttpMethod.POST, endpoint + "/tasks/**").hasAnyRole("ADMIN","USER")
-                        .requestMatchers(HttpMethod.PUT, endpoint + "/tasks/**").hasAnyRole("ADMIN","USER")
-                        .requestMatchers(HttpMethod.DELETE, endpoint + "/tasks/**").hasAnyRole("ADMIN","USER")
-                        .anyRequest().authenticated())
+                    .authorizeHttpRequests(auth -> auth                     
+                    .requestMatchers(HttpMethod.GET, endpoint + "/login").permitAll()
+                    .requestMatchers(HttpMethod.POST, endpoint + "/register").permitAll()
+                    .requestMatchers(HttpMethod.POST, endpoint + "/add-member").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, endpoint + "/tasks/**").hasAnyRole("ADMIN","USER")  
+                    .requestMatchers(HttpMethod.POST, endpoint + "/tasks/**").hasAnyRole("ADMIN","USER")
+                    .requestMatchers(HttpMethod.PUT, endpoint + "/tasks/**").hasAnyRole("ADMIN","USER")
+                    .requestMatchers(HttpMethod.DELETE, endpoint + "/tasks/**").hasAnyRole("ADMIN","USER")
+                    .anyRequest().authenticated())
                 .userDetailsService(jpaUserDetailsService)
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session
@@ -66,6 +65,7 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+        configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -78,5 +78,4 @@ public class SecurityConfiguration {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }

@@ -2,6 +2,9 @@ package dev.eva.dorymind.roles;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import dev.eva.dorymind.users.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -25,6 +28,8 @@ public class Role {
 
     // un rol puede tener muchos users
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    @JsonBackReference // Añade esta anotación aquí
+
     private List<User> users = new ArrayList<>();
         
     public Role() {
@@ -44,11 +49,11 @@ public class Role {
         this.id = id;
     }
 
-    public String getname() {
+    public String getName() {
         return name;
     }
 
-    public void setname(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 

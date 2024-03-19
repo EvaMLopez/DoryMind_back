@@ -3,6 +3,8 @@ package dev.eva.dorymind.groups;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import dev.eva.dorymind.tasks.Task;
 import dev.eva.dorymind.users.User;
 import jakarta.persistence.CascadeType;
@@ -26,6 +28,7 @@ public class Group {
     private String groupName;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @JsonBackReference // Añade esta anotación aquí
     private List<User> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)

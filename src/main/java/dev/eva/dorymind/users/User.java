@@ -2,6 +2,10 @@ package dev.eva.dorymind.users;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import dev.eva.dorymind.groups.Group;
 import dev.eva.dorymind.roles.Role;
 import dev.eva.dorymind.tasks.Task;
@@ -35,14 +39,17 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "group_id")
+    @JsonManagedReference // Añade esta anotación aquí
     private Group group;
 
     @OneToMany(mappedBy = "assignedUser", cascade = CascadeType.ALL)
+    @JsonBackReference // Añade esta anotación aquí
     private List<Task> tasks = new ArrayList<>();
 
     // ** un Role puede tener muchos User, pero cada User tiene un único Role
     @ManyToOne
     @JoinColumn(name = "role_id")
+    @JsonManagedReference // Añade esta anotación aquí
     private Role role;
         
     public User() {
@@ -106,7 +113,7 @@ public class User {
     }
     
     private boolean hasRole(String name) {
-        return this.role.getname().equals(name);
+        return this.role.getName().equals(name);
     }
     
     public void assignRole(Role role) {
@@ -121,6 +128,10 @@ public class User {
         return role;
     }
 
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
     public void editProfile(String newUsername, String newPassword, String newEmail) {
         if (newUsername != null && !newUsername.isEmpty()) {
             this.username = newUsername;
@@ -132,9 +143,7 @@ public class User {
             this.email = newEmail;
         }
     }
-
 }
-
 
     
         
