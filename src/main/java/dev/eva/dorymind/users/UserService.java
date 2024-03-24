@@ -57,13 +57,11 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    // Establece el rol de admin:
     public void setRoleToUser(User user) {
         Role adminRole = roleRepository.findByName("ROLE_ADMIN");
         user.setRole(adminRole);        
     }
 
-    // Añade un miembro al grupo del usuario, sólo user con Rol Admin
     public User addMemberToGroup(User currentUser, User newMember) {
         if (!currentUser.isAdmin()) {
             throw new UnauthorizedException("No tienes permisos para añadir miembros al grupo.");
@@ -74,7 +72,6 @@ public class UserService {
         return userRepository.save(newMember);
     }
 
-    // Busca el id del grupo al que pertenece el usuario
     public Long getGroupIdByUserId(Long userId) {
         return userRepository.findGroupIdByUserId(userId);
     }    

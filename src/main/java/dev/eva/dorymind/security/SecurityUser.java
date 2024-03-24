@@ -25,7 +25,7 @@ public class SecurityUser implements UserDetails{
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
     
-        Role role = user.getRole(); // Obtiene el único Role del usuario
+        Role role = user.getRole(); 
         System.out.println("User role : " + role.getName());
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
         authorities.add(authority);

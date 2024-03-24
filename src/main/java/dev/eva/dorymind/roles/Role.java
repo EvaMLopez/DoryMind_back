@@ -25,10 +25,9 @@ public class Role {
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;
-
-    // un rol puede tener muchos users
+    
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
-    @JsonBackReference // Añade esta anotación aquí
+    @JsonBackReference 
 
     private List<User> users = new ArrayList<>();
         

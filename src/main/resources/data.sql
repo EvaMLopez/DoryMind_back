@@ -14,6 +14,8 @@ INSERT INTO users (id, username, password, email, group_id, role_id) VALUES (3, 
 
 INSERT INTO tasks (id, title, description, deadline_date, group_id, assigned_user_id, is_urgent, is_completed) VALUES (default, 'Móvil', 'Comparar precios en El Corte Inglés, Xiaomi, Amazon... ', '2023-03-22', 1, 2, false, true);
 
-INSERT INTO tasks (id, title, description, deadline_date, group_id, assigned_user_id, is_urgent, is_completed) VALUES (default, 'Cumpleaños', 'Comprar regalo a Tamagochi', '2023-04-15', 1, 1, false, false);
+INSERT INTO tasks (id, title, description, deadline_date, group_id, assigned_user_id, is_urgent, is_completed) VALUES (default, 'Torrijas', 'Hacer torrijas rellenas de Nutella', '2023-03-28', 1, 1, true, false);
+
+INSERT INTO tasks (id, title, description, deadline_date, group_id, assigned_user_id, is_urgent, is_completed) VALUES (default, 'Cumpleaños', 'Comprar regalo a Tamagochi', '2023-04-15', 1, 1, false, true);
 
 INSERT INTO tasks (id, title, description, deadline_date, group_id, assigned_user_id, is_urgent, is_completed) VALUES (default, 'Deberes', 'Hacer los deberes para poder ir al cine el sábado', '2023-03-29', 1, 3, true, false);

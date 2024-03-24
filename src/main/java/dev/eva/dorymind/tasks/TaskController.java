@@ -19,7 +19,7 @@ import dev.eva.dorymind.security.SecurityUser;
 import dev.eva.dorymind.users.User;
 import dev.eva.dorymind.users.UserService;
 
-@CrossOrigin(origins = "http://localhost:5173") // ** ACTUALIZAR ** //
+@CrossOrigin(origins = "http://localhost:5173") 
 @RestController
 @RequestMapping("${api-endpoint}/tasks")
 public class TaskController {
@@ -29,11 +29,6 @@ public class TaskController {
     
     @Autowired
     private UserService userService;
-
-    /* @GetMapping
-    public List<Task> getAllTasks() {
-        return taskService.findAll();
-    }   */  
 
     @GetMapping
     public List<TaskDTO> getAllTasks() {
@@ -55,46 +50,28 @@ public class TaskController {
 
     @GetMapping("/my-tasks")
     public List<TaskDTO> getMyTasks(@AuthenticationPrincipal SecurityUser securityUser) {
-        // Obtiene el ID del usuario autenticado
         Long userId = securityUser.getId();
-        // Utiliza el servicio para obtener las tareas asignadas al usuario
         return taskService.getTasksAssignedToUser(userId);
     }
 
     @PostMapping
     public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO newTaskDTO, @AuthenticationPrincipal SecurityUser securityUser) {
-        // Convierte TaskDTO a Task utilizando el método del servicio
         Task newTask = taskService.convertToTask(newTaskDTO);
-
         User assignedUser = userService.findById(newTaskDTO.getAssignedUserId());
         newTask.setAssignedUser(assignedUser);
-
-        // Crea la nueva tarea en el servicio
         Task savedTask = taskService.create(newTask);
-
-        // Crea un nuevo objeto TaskDTO a partir del Task creado
         TaskDTO savedTaskDTO = new TaskDTO(savedTask);
-
-        // Devuelve la tarea creada como TaskDTO
         return ResponseEntity.status(HttpStatus.CREATED).body(savedTaskDTO);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<TaskDTO> updateTask(@PathVariable Long id, @RequestBody TaskDTO updatedTaskDTO) {
-        // Convierte TaskDTO a Task utilizando el método del servicio
         Task updatedTask = taskService.convertToTask(updatedTaskDTO);
         updatedTask.setId(id);
-
-        // Actualiza la tarea en el servicio
         Task savedTask = taskService.update(updatedTask);
-
-        // Crea un nuevo objeto TaskDTO a partir del Task actualizado
         TaskDTO savedTaskDTO = new TaskDTO(savedTask);
-
-        // Devuelve la tarea actualizada como TaskDTO
         return ResponseEntity.ok(savedTaskDTO);
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteTask(@PathVariable Long id, @AuthenticationPrincipal SecurityUser securityUser) {

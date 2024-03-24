@@ -28,7 +28,7 @@ public class Group {
     private String groupName;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    @JsonBackReference // Añade esta anotación aquí
+    @JsonBackReference 
     private List<User> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)

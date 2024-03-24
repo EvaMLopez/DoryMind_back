@@ -34,12 +34,12 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "group_id")
-    @JsonManagedReference // Añade esta anotación aquí
+    @JsonManagedReference 
     private Group group;
 
     @ManyToOne
     @JoinColumn(name = "assigned_user_id")
-    @JsonManagedReference // Añade esta anotación aquí    
+    @JsonManagedReference  
     private User assignedUser;
 
     @Column(name = "is_urgent")
