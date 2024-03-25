@@ -122,4 +122,7 @@ Hay que insertar un JSON para esta petición.
     "assignedUserId": 1 
 }
 ```
+<<<<<<< HEAD
 
+=======
+>>>>>>> b8769d214a335d3b95adcd1a1bac8bf433ecbe90
