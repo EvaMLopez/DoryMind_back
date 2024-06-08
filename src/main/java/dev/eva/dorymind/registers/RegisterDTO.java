@@ -1,4 +1,4 @@
-package dev.eva.dorymind.register;
+package dev.eva.dorymind.registers;
 
 public class RegisterDTO {
 
